@@ -1,58 +1,111 @@
-import React, { Component, useState, useRef, useEffect } from 'react';
-import { Button, Input, Checkbox } from 'antd';
-import './index.css'
+import React, { Component, useState, useRef, useEffect } from "react";
+import { Button, Input, DatePicker } from "antd";
+import "./index.css";
 
 const Home = () => {
-  const [searchVal, setSearchVal] = useState('');
+  const [searchVal, setSearchVal] = useState("");
+  const [editValue, setEditValue] = useState("");
   const [lists, setList] = useState([]);
   const [count, setCount] = useState(0);
   const onSearch = (value) => {
     setSearchVal(value);
   };
+  const onEditChange = (value) => {
+    setEditValue(value);
+  };
   const addSomeThing = () => {
     if (searchVal.trim() !== "") {
-      setList([...lists, { is: false, do: searchVal, isEdit: false }])
+      setList([...lists, { is: false, do: searchVal, isEdit: false }]);
     }
-    setSearchVal('');
-    console.log(lists)
-  }
-  const doSomeThing = (index) => {
-    console.log(222)
+    setSearchVal("");
+    console.log(lists);
+  };
+  const onDateChange = (value, dateString) => {
+    console.log("Selected Time: ", value);
+    console.log("Formatted Selected Time: ", dateString);
+  };
+  const onDateOk = (value) => {
+    console.log("onOk: ", value);
+  };
+  const listChange = (index, arr) => {
     const newList = [...lists];
-    newList[index].is = true;
+    arr.map((item) => {
+      return (newList[index][item.key] = item.value);
+    });
     setList([...newList]);
-  }
-  const onCheckChange = (index) => {
-    console.log(333)
-    const newList = [...lists];
-    newList[index].is = !newList[index].is;
-    setList([...newList]);
-  }
-  const listChange = (index, key, val, v) => {
-    const newList = [...lists];
-    if (v) {
-      newList[index][key] = !newList[index][key];
-    } else {
-      newList[index][key] = val
-    }
-    setList([...newList]);
-  }
-  const onEdit = (index) => {
-    listChange(index, 'isEdit', '', true)
-  }
+  };
+  const onEdit = (index, arr, value) => {
+    setEditValue(value);
+    listChange(index, arr);
+  };
   return (
-    <div id='todo'>
-      <div className='search'>
-        <Input placeholder="请输入待做事项" value={searchVal} onChange={(e) => onSearch(e.target.value)} onPressEnter={(e) => addSomeThing()}></Input>
-        <Button onClick={addSomeThing}>搜索</Button>
+    <div id="todo">
+      <div className="search">
+        <Input
+          placeholder="请输入待做事项"
+          value={searchVal}
+          onChange={(e) => onSearch(e.target.value)}
+          onPressEnter={(e) => addSomeThing()}
+        ></Input>
+        <DatePicker placeholder="选择时间" showTime onChange={onDateChange} onOk={onDateOk} />
+        <Button onClick={addSomeThing}>添加</Button>
       </div>
       <div>
-        <ul className='todoList'>
+        <ul className="todoList">
           {lists.map((item, index) => (
-            <li className='todoItem' key={index} onClick={() => doSomeThing(index)}>
-              {item.isEdit ? (<div>{item.is + item.do}<Button onClick={() => onEdit(index)}>保存</Button><Button onClick={() => onEdit(index)}>取消</Button></div>) : (
-                <div>{item.is + item.do}<Button onClick={() => onEdit(index)}>修改</Button></div>)}
-              <Checkbox checked={item.is ? true : false} onChange={() => onCheckChange(index)}></Checkbox>
+            // <li className='todoItem' key={index} onClick={() => doSomeThing(index)}>
+            <li className="todoItem" key={index}>
+              <input
+                type="checkbox"
+                checked={item.is ? true : false}
+                onChange={() =>  listChange(index, [{ key: "is", value: !item.is }])}
+              />
+              {item.isEdit ? (
+                <div>
+                  <Input
+                    style={{ width: "300px", marginRight: "10px" }}
+                    value={editValue}
+                    onChange={(e) => onEditChange(e.target.value)}
+                  ></Input>
+                  <Button
+                    onClick={() =>
+                      listChange(index, [
+                        { key: "do", value: editValue },
+                        { key: "isEdit", value: false },
+                      ])
+                    }
+                  >
+                    保存
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      listChange(index, [{ key: "isEdit", value: false }])
+                    }
+                  >
+                    取消
+                  </Button>
+                </div>
+              ) : (
+                <div className={item.is ? "done" : ""}>
+                  {item.do}
+                  {item.is ? (
+                    ""
+                  ) : (
+                    <Button
+                      className="changeBtn"
+                      onClick={() =>
+                        onEdit(
+                          index,
+                          [{ key: "isEdit", value: !item.is }],
+                          item.do
+                        )
+                      }
+                    >
+                      修改
+                    </Button>
+                  )}
+                </div>
+              )}
             </li>
             // <li className={item.is ? 'todoItem endTodo' : 'todoItem'} key={index}>{item.is}{item.do}
             //   <div className='endAnimal' onClick={doSomeThing(index)}>
@@ -62,12 +115,11 @@ const Home = () => {
             //     </svg>
             //   </div>
             // </li>
-          )
-          )}
+          ))}
         </ul>
       </div>
-    </div >
+    </div>
   );
-}
+};
 
 export default Home;

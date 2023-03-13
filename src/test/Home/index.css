@@ -1,29 +1,98 @@
-#todo{
+#todo {
   width: 100%;
   height: 100%;
   padding: 20px;
 }
-.todoList{
+
+.todoList {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
 }
-.todoItem{
+
+.todoItem {
   display: flex;
-  justify-content: space-between;
   width: 100%;
   height: 40px;
   line-height: 40px;
   font-size: 14px;
   box-sizing: border-box;
   padding: 0 10px;
+}
+
+.done {
+  text-decoration: line-through;
+  color: #ccc;
+}
+.todoItem>div {
+  width: 100%;
+  margin-left: 10px;
+}
+.todoItem>div button{
+  display: inline-block;
+}
+
+.todoItem .changeBtn {
+  display: none;
+}
+
+.todoItem:hover .changeBtn {
+  display: inline;
+  margin-left: 10px;
+}
+
+.todoItem input[type="checkbox"] {
+  width: 1.64rem;
+  height: 1.64rem;
+  display: inline-block;
+  text-align: center;
+  vertical-align: baseline;
+  line-height: 1.64rem;
+  position: relative;
+  border-radius: 50%;
+  outline: none;
+  -webkit-appearance: none;
+  ​border: 1px solid #fff;
+  -webkit-tab-highlight-color: rgba(0, 0, 0, 0);
+  color: #fff;
+  background: #fff;
+  margin-left: 3px;
 
 }
-.todoItem:hover{
+
+.todoItem input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #999999;
+  border-radius: 50%;
+  color: #fff;
+  margin-top: 5px;
+}
+
+.todoItem input[type=checkbox]:checked::before {
+  content: "\2713";
+  /* background-color: #657afe; */
+  border: 1px solid #657afe;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: green;
+  font-size: 1.52rem;
+  border-radius: 50%;
+}
+
+.todoItem:hover {
   border-radius: 3px;
   box-shadow: 0px 1px 10px #ccc;
 }
-.search{
+
+.search {
   display: flex;
   justify-content: left;
   padding-right: 20px;
@@ -32,55 +101,58 @@
 
 
 /* 自定义打勾动画 */
-input[type="checkbox"]:checked ~ h2 {
+input[type="checkbox"]:checked~h2 {
   animation: .6s title ease-in-out;
   animation-delay: 1.2s;
   animation-fill-mode: forwards;
 }
- 
+
 .circle {
   stroke-dasharray: 1194;
   stroke-dashoffset: 1194;
 }
- 
-input[type="checkbox"] + svg .circle {
+
+input[type="checkbox"]+svg .circle {
   animation: circle 1s ease-in-out;
   animation-fill-mode: forwards;
 }
- 
+
 .tick {
   stroke-dasharray: 350;
   stroke-dashoffset: 350;
 }
- 
-input[type="checkbox"] + svg .tick {
+
+input[type="checkbox"]+svg .tick {
   animation: tick .8s ease-out;
   animation-fill-mode: forwards;
   animation-delay: .95s;
 }
- 
+
 @keyframes circle {
   from {
     stroke-dashoffset: 1194;
   }
+
   to {
     stroke-dashoffset: 2388;
   }
 }
- 
+
 @keyframes tick {
   from {
     stroke-dashoffset: 350;
   }
+
   to {
     stroke-dashoffset: 0;
   }
 }
- 
+
 @keyframes title {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
