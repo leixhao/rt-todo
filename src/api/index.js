@@ -1,10 +1,10 @@
 import request from '../utils/request';
 
-function getArticleList(){
-  return  request("get",'/article/home/index');
+function getListGroupTeam(data){
+  return  request("post",'user/listGroupTeam.do',data);
 }
 
 export {
-   getArticleList
+  getListGroupTeam
 }
 

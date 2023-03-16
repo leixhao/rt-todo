@@ -18,7 +18,8 @@ import "./index.css";
 import Home from "../../test/Home/index";
 // import Home from '../../test/Home';
 import About from "../../test/About";
-import Users from "../../test/Users";
+// import Users from "../../test/Users";
+import Users from "../../test/User/index";
 const { Header, Content, Sider } = Layout;
 const items1 = ["1", "2", "3"].map((key) => ({
   key,
