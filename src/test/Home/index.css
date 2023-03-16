@@ -24,11 +24,15 @@
   text-decoration: line-through;
   color: #ccc;
 }
+
 .todoItem>div {
   width: 100%;
   margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
 }
-.todoItem>div button{
+
+.todoItem>div button {
   display: inline-block;
 }
 
