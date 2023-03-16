@@ -14,11 +14,11 @@ const User = () => {
     deviceToken: "html5",
     deviceType: "html5",
   });
-  const getList = ()=>{
-    getListGroupTeam(paramsData).then(res =>{
+  const getList = () => {
+    getListGroupTeam(paramsData).then((res) => {
       setUserList(res.info);
-    })
-  }
+    });
+  };
   useEffect(() => {
     let ignore = false;
     async function startFetching() {
@@ -111,12 +111,6 @@ const User = () => {
   ];
   return (
     <div>
-      {useList.map((item) => {
-        console.log("33333");
-      })}
-      {data.map((item) => {
-        console.log("2323");
-      })}
       <Table columns={columns} dataSource={data} />
     </div>
   );
