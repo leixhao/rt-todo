@@ -1,10 +1,11 @@
 import React, { Component, useState, useRef, useEffect } from "react";
 import { Space, Table, Tag } from "antd";
-import { getListGroupTeam } from "../../api/index";
+import { getListGroupTeam, getTeamList } from "../../api/index";
 
 const User = () => {
   const [isAxios, setAxios] = useState(false);
   const [useList, setUserList] = useState([]);
+  const [teamList, setTeamList] = useState([]);
   const [paramsData, setParams] = useState({
     userId: 289,
     page: 1,
@@ -15,10 +16,20 @@ const User = () => {
     deviceType: "html5",
   });
   const getList = () => {
-    getListGroupTeam(paramsData).then((res) => {
-      setUserList(res.info);
-    });
+    getTList();
+    // getListGroupTeam(paramsData).then((res) => {
+    //   setUserList(res.info);
+    // });
   };
+  const getTList = ()=>{
+    getTeamList(paramsData).then(res =>{
+      console.log(res.info)
+      res.info.map((item,index) =>{
+        item.key = index
+      })
+      setTeamList(res.info)
+    })
+  }
   useEffect(() => {
     let ignore = false;
     async function startFetching() {
@@ -33,11 +44,15 @@ const User = () => {
       }
     }
     startFetching();
-
     return () => {
       ignore = true;
     };
   }, [paramsData]);
+  const teamColumns = [{
+    title: 'teamname',
+    dataIndex: 'teamName',
+    key: 'teamName'
+  }];
   const columns = [
     {
       title: "Name",
@@ -112,6 +127,7 @@ const User = () => {
   return (
     <div>
       <Table columns={columns} dataSource={data} />
+      <Table columns={teamColumns} dataSource={teamList} />
     </div>
   );
 };

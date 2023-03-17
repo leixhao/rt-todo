@@ -1,10 +1,10 @@
-import request from '../utils/request';
+import request from "../utils/request";
 
-function getListGroupTeam(data){
-  return  request("post",'user/listGroupTeam.do',data);
+function getTeamList(params) {
+  return request("get", "user/getListTeam.do", params);
+}
+function getListGroupTeam(data) {
+  return request("post", "user/listGroupTeam.do", data);
 }
 
-export {
-  getListGroupTeam
-}
-
+export { getListGroupTeam, getTeamList };

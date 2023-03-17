@@ -14,8 +14,9 @@ axios.interceptors.request.use(
     // config.data = JSON.stringify(config.data);
     config.headers = {
       // "Content-Type": "application/json",
-      'Content-Type':'application/x-www-form-urlencoded; charset=utf-8',
+      "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
     };
+    console.log(config);
     return config;
   },
   (error) => {
@@ -46,9 +47,15 @@ axios.interceptors.response.use(
  */
 export function get(url, params = {}) {
   return new Promise((resolve, reject) => {
-    axios.get(url, {
-        params: params,
-      }).then((response) => {
+    axios
+      .get(url, {
+        params: {
+          deviceToken: "html5",
+          deviceType: "html5",
+          ...params,
+        },
+      })
+      .then((response) => {
         landing(url, params, response.data);
         resolve(response.data);
       })
@@ -67,15 +74,21 @@ export function get(url, params = {}) {
 
 export function post(url, data) {
   return new Promise((resolve, reject) => {
-    axios.post(url, data).then(
-      (response) => {
-        //关闭进度条
-        resolve(response.data);
-      },
-      (err) => {
-        reject(err);
-      }
-    );
+    axios
+      .post(url, {
+        deviceToken: "html5",
+        deviceType: "html5",
+        ...data,
+      })
+      .then(
+        (response) => {
+          //关闭进度条
+          resolve(response.data);
+        },
+        (err) => {
+          reject(err);
+        }
+      );
   });
 }
 
@@ -122,7 +135,6 @@ export function put(url, data = {}) {
 
 //统一接口处理，返回数据
 export default function (fecth, url, param) {
-  let _data = "";
   return new Promise((resolve, reject) => {
     switch (fecth) {
       case "get":
@@ -213,4 +225,3 @@ function landing(url, params, data) {
   if (data.code === -1) {
   }
 }
-
