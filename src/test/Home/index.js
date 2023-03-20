@@ -54,9 +54,6 @@ const Home = () => {
     console.log("Formatted Selected Time: ", dateString);
     dateChange(dateString);
   };
-  const onDateOk = (value) => {
-    console.log("onOk: ", value);
-  };
   const listChange = (index, arr) => {
     const newList = [...lists];
     arr.map((item) => {
@@ -73,12 +70,8 @@ const Home = () => {
     newList.splice(index, 1);
     setList(newList);
   };
-  useEffect(() => {
-    console.log("打印一个值");
-  }, []);
   return (
     <div id="todo">
-      test react
       <div className="search">
         <Input
           style={{ width: "300px" }}
@@ -91,7 +84,6 @@ const Home = () => {
           placeholder="选择时间"
           showTime
           onChange={onDateChange}
-          onOk={onDateOk}
         />
         <Select
           defaultValue="public"
@@ -106,7 +98,6 @@ const Home = () => {
       <div>
         <ul className="todoList">
           {lists.map((item, index) => (
-            // <li className='todoItem' key={index} onClick={() => doSomeThing(index)}>
             <li className="todoItem" key={index}>
               <input
                 type="checkbox"
@@ -171,14 +162,6 @@ const Home = () => {
                 </div>
               )}
             </li>
-            // <li className={item.is ? 'todoItem endTodo' : 'todoItem'} key={index}>{item.is}{item.do}
-            //   <div className='endAnimal' onClick={doSomeThing(index)}>
-            //     <svg width="400" height="400">
-            //       <circle fill="none" stroke="#68E534" stroke-width="20" cx="200" cy="200" r="190" className="circle" stroke-linecap="round" transform="rotate(-90 200 200) " />
-            //       <polyline fill="none" stroke="#68E534" stroke-width="24" points="88,214 173,284 304,138" stroke-linecap="round" stroke-linejoin="round" className="tick" />
-            //     </svg>
-            //   </div>
-            // </li>
           ))}
         </ul>
       </div>

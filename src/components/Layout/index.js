@@ -27,10 +27,11 @@ const items1 = ["1", "2", "3"].map((key) => ({
 }));
 
 const routerArr = [
-  { path: "/", name: "主页" },
-  { path: "/about", name: "关于" },
-  { path: "/users", name: "用户" },
+  { path: "/home", name: "todo", key: "home" },
+  { path: "/about", name: "关于", key: "about" },
+  { path: "/users", name: "用户", key: "users" },
 ];
+const count = "3434";
 const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
   (icon, index) => {
     const key = String(index + 1);
@@ -50,7 +51,7 @@ const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
 );
 const items3 = routerArr.map((item) => {
   return {
-    key: item.path,
+    key: item.key,
     label: item.name,
     path: item.path,
   };
@@ -85,8 +86,8 @@ const LayoutBox = () => {
         >
           <Menu
             mode="inline"
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1"]}
+            defaultSelectedKeys={["home"]}
+            defaultOpenKeys={["home"]}
             style={{
               height: "100%",
               borderRight: 0,
@@ -120,6 +121,7 @@ const LayoutBox = () => {
             <Routes>
               <Route path="/about" element={<About />} />
               <Route path="/users" element={<Users />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/" element={<Home />} />
             </Routes>
           </Content>

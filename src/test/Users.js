@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { Button } from 'antd';
-class Users extends Component {
-  render() {
-    return (
-      <div>
-        <Button>跳转到员工页面</Button>
-      </div>
-    );
-  }
-}
+import React, { Component } from "react";
+import { Button } from "antd";
+const Childcom = (props) => {
+  console.log(props)
+  return(
+    <div>
+      {props.data.userId}
+      <Button>跳转到员工页面</Button>
+    </div>
+  );
+};
 
-export default Users;
+export default Childcom;

@@ -1,6 +1,7 @@
 import React, { Component, useState, useRef, useEffect } from "react";
 import { Space, Table, Tag } from "antd";
 import { getListGroupTeam, getTeamList } from "../../api/index";
+import Childcom from '../Users'
 
 const User = () => {
   const [isAxios, setAxios] = useState(false);
@@ -25,7 +26,7 @@ const User = () => {
     getTeamList(paramsData).then(res =>{
       console.log(res.info)
       res.info.map((item,index) =>{
-        item.key = index
+        return item.key = index
       })
       setTeamList(res.info)
     })
@@ -126,6 +127,7 @@ const User = () => {
   ];
   return (
     <div>
+      <Childcom data={paramsData} />
       <Table columns={columns} dataSource={data} />
       <Table columns={teamColumns} dataSource={teamList} />
     </div>
