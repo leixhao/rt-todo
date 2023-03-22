@@ -1,5 +1,5 @@
 import React, { Component, useState, useRef, useEffect } from "react";
-import { Button, Input, DatePicker, Select } from "antd";
+import { Button, Input, DatePicker, Select, Tabs } from "antd";
 import "./index.css";
 
 const Home = () => {
@@ -21,6 +21,16 @@ const Home = () => {
     //   label: "Disabled",
     //   disabled: true,
     // },
+  ];
+  const tabArr = [
+    {
+      key: "do",
+      label: "待做事项",
+    },
+    {
+      key: "done",
+      label: "已完成",
+    },
   ];
   const [searchVal, setSearchVal] = useState("");
   const [editValue, setEditValue] = useState("");
@@ -80,11 +90,7 @@ const Home = () => {
           onChange={(e) => onSearch(e.target.value)}
           onPressEnter={(e) => addSomeThing()}
         ></Input>
-        <DatePicker
-          placeholder="选择时间"
-          showTime
-          onChange={onDateChange}
-        />
+        <DatePicker placeholder="选择时间" showTime onChange={onDateChange} />
         <Select
           defaultValue="public"
           style={{
@@ -96,74 +102,91 @@ const Home = () => {
         <Button onClick={addSomeThing}>添加</Button>
       </div>
       <div>
-        <ul className="todoList">
-          {lists.map((item, index) => (
-            <li className="todoItem" key={index}>
-              <input
-                type="checkbox"
-                checked={item.is ? true : false}
-                onChange={() =>
-                  listChange(index, [{ key: "is", value: !item.is }])
-                }
-              />
-              {item.isEdit ? (
-                <div>
-                  <Input
-                    style={{ width: "300px", marginRight: "10px" }}
-                    value={editValue}
-                    onChange={(e) => onEditChange(e.target.value)}
-                  ></Input>
-                  <Button
-                    onClick={() =>
-                      listChange(index, [
-                        { key: "do", value: editValue },
-                        { key: "isEdit", value: false },
-                      ])
-                    }
-                  >
-                    保存
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      listChange(index, [{ key: "isEdit", value: false }])
-                    }
-                  >
-                    取消
-                  </Button>
-                </div>
-              ) : (
-                <div className={item.is ? "done" : ""}>
-                  {item.do}
-                  {item.is ? (
-                    ""
-                  ) : (
-                    <div>
-                      <Button
-                        className="changeBtn"
-                        onClick={() =>
-                          onEdit(
-                            index,
-                            [{ key: "isEdit", value: !item.is }],
-                            item.do
-                          )
-                        }
-                      >
-                        修改
-                      </Button>
-                      <Button
-                        className="changeBtn"
-                        onClick={() => onDel(index)}
-                      >
-                        删除
-                      </Button>
-                    </div>
-                  )}
-                  <div>{item.time}</div>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
+        <Tabs defaultActiveKey="do">
+          {tabArr.map((item, index) => {
+            if (item.key === "do") {
+              return (
+                <Tabs.TabPane tab={item.label} key={item.key}>
+                  <ul className="todoList">
+                    {lists.map((item, index) => (
+                      <li className="todoItem" key={index}>
+                        <input
+                          type="checkbox"
+                          checked={item.is ? true : false}
+                          onChange={() =>
+                            listChange(index, [{ key: "is", value: !item.is }])
+                          }
+                        />
+                        {item.isEdit ? (
+                          <div>
+                            <Input
+                              style={{ width: "300px", marginRight: "10px" }}
+                              value={editValue}
+                              onChange={(e) => onEditChange(e.target.value)}
+                            ></Input>
+                            <Button
+                              onClick={() =>
+                                listChange(index, [
+                                  { key: "do", value: editValue },
+                                  { key: "isEdit", value: false },
+                                ])
+                              }
+                            >
+                              保存
+                            </Button>
+                            <Button
+                              onClick={() =>
+                                listChange(index, [
+                                  { key: "isEdit", value: false },
+                                ])
+                              }
+                            >
+                              取消
+                            </Button>
+                          </div>
+                        ) : (
+                          <div className={item.is ? "done" : ""}>
+                            {item.do}
+                            {item.is ? (
+                              ""
+                            ) : (
+                              <div>
+                                <Button
+                                  className="changeBtn"
+                                  onClick={() =>
+                                    onEdit(
+                                      index,
+                                      [{ key: "isEdit", value: !item.is }],
+                                      item.do
+                                    )
+                                  }
+                                >
+                                  修改
+                                </Button>
+                                <Button
+                                  className="changeBtn"
+                                  onClick={() => onDel(index)}
+                                >
+                                  删除
+                                </Button>
+                              </div>
+                            )}
+                            <div>{item.time}</div>
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </Tabs.TabPane>
+              );
+            }
+            return (
+              <Tabs.TabPane tab={item.label} key={item.key}>
+                已完成
+              </Tabs.TabPane>
+            );
+          })}
+        </Tabs>
       </div>
     </div>
   );
