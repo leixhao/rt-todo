@@ -1,7 +1,7 @@
-import React, { Component, useState, useRef, useEffect } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Space, Table, Tag } from "antd";
 import { getListGroupTeam, getTeamList } from "../../api/index";
-import Childcom from '../Users'
+import Childcom from "../Users";
 
 const User = () => {
   const [isAxios, setAxios] = useState(false);
@@ -22,38 +22,36 @@ const User = () => {
     //   setUserList(res.info);
     // });
   };
-  const getTList = ()=>{
-    getTeamList(paramsData).then(res =>{
-      console.log(res.info)
-      res.info.map((item,index) =>{
-        return item.key = index
-      })
-      setTeamList(res.info)
-    })
-  }
+  const getTList = () => {
+    getTeamList(paramsData).then((res) => {
+      console.log(res.info);
+      res.info.map((item, index) => {
+        return (item.key = index);
+      });
+      setTeamList(res.info);
+    });
+  };
+  const startFetching = async () => {
+    const json = await getListGroupTeam(paramsData);
+    console.log(json.info);
+    // 这里执行是异步的，所以第一次执行到此处的时候组件已经被卸载了
+    // 此时的 ignore 已经被 return 里面的方法置为 true 了
+    // 所以这里第一次执行的时候不执行 setTodos(json)
+    // setTodos 其实是在第二次执行的时候才触发
+    setUserList(json.info);
+  };
   useEffect(() => {
-    let ignore = false;
-    async function startFetching() {
-      const json = await getListGroupTeam(paramsData);
-      console.log(json.info);
-      // 这里执行是异步的，所以第一次执行到此处的时候组件已经被卸载了
-      // 此时的 ignore 已经被 return 里面的方法置为 true 了
-      // 所以这里第一次执行的时候不执行 setTodos(json)
-      // setTodos 其实是在第二次执行的时候才触发
-      if (!ignore) {
-        setUserList(json.info);
-      }
-    }
+    console.log(333333);
     startFetching();
-    return () => {
-      ignore = true;
-    };
-  }, [paramsData]);
-  const teamColumns = [{
-    title: 'teamname',
-    dataIndex: 'teamName',
-    key: 'teamName'
-  }];
+    return () => {};
+  }, []);
+  const teamColumns = [
+    {
+      title: "teamname",
+      dataIndex: "teamName",
+      key: "teamName",
+    },
+  ];
   const columns = [
     {
       title: "Name",

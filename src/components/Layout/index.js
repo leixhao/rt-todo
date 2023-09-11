@@ -5,15 +5,11 @@ import {
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { Button } from "antd";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Router from "../../route/index";
 import {
-  Link,
-  Redirect,
   useNavigate,
-  useHistory,
-  useLocation,
 } from "react-router-dom";
-import React from "react";
+import React, { Outlet } from "react";
 import "./index.css";
 import Home from "../../test/Home/index";
 // import Home from '../../test/Home';
@@ -56,7 +52,7 @@ const items3 = routerArr.map((item) => {
     path: item.path,
   };
 });
-const LayoutBox = () => {
+const LayoutBox = ({children}) => {
   const navigate = useNavigate();
   const onClick = (e) => {
     console.log(e);
@@ -101,7 +97,7 @@ const LayoutBox = () => {
             padding: "0 24px 24px",
           }}
         >
-          <Breadcrumb
+          {/* <Breadcrumb
             style={{
               margin: "16px 0",
             }}
@@ -109,7 +105,7 @@ const LayoutBox = () => {
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
+          </Breadcrumb> */}
           <Content
             style={{
               padding: 24,
@@ -118,12 +114,15 @@ const LayoutBox = () => {
               background: colorBgContainer,
             }}
           >
-            <Routes>
+            123123
+            {children}
+            {/* <Router /> */}
+            {/* <Routes>
               <Route path="/about" element={<About />} />
               <Route path="/users" element={<Users />} />
               <Route path="/home" element={<Home />} />
               <Route path="/" element={<Home />} />
-            </Routes>
+            </Routes> */}
           </Content>
         </Layout>
       </Layout>
